@@ -1,0 +1,59 @@
+/******************************************************************************
+* Copyright (c) ATTX LLC 2024. All Rights Reserved.
+*
+* This software and associated documentation (the "Software") are the 
+* proprietary and confidential information of ATTX, LLC. The Software is 
+* furnished under a license agreement between ATTX and the user organization 
+* and may be used or copied only in accordance with the terms of the agreement.
+* Refer to 'license/attx_license.adoc' for standard license terms.
+*
+* EXPORT CONTROL NOTICE: THIS SOFTWARE MAY INCLUDE CONTENT CONTROLLED UNDER THE
+* INTERNATIONAL TRAFFIC IN ARMS REGULATIONS (ITAR) OR THE EXPORT ADMINISTRATION 
+* REGULATIONS (EAR99). No part of the Software may be used, reproduced, or 
+* transmitted in any form or by any means, for any purpose, without the express 
+* written permission of ATTX, LLC.
+******************************************************************************/
+// THIS IS AN AUTO-GENERATED FILE AND SHOULD NOT BE MODIFIED UNDER 
+// ANY CIRCUMSTANCES.
+// LOOKING TO CUSTOM-CONFIGURE SWIG BUILDING FOR YOUR MODEL, EVENT,
+// MONITOR, or TASK? Create a .i file in the swig_manual directory
+// with the same (ModelName) .i as the model file and the custom
+// compiler will not auto-generate in favor of the manual model .i
+
+/* File : <<ItemName>>.i */
+%module <<ItemName>>
+#pragma SWIG nowarn=302,509,362
+// Include other pre-defined modules
+%include <std_string.i>
+%include "<<ClockwerkSwigPath>>/data_management.i"
+%include "<<ClockwerkSwigPath>>/architecture.i"
+%include "<<ClockwerkSwigPath>>/core.i"
+%include "<<ClockwerkSwigPath>>/simlogging.i"
+%include "<<ClockwerkSwigPath>>/simulation.i"
+%{
+#include "core/macros.h"
+%}
+%include "core/macros.h"
+
+%feature("flatnested", "3");
+
+%rename (<<ItemName>>_Params) <<ItemName>>::Params;
+%rename (<<ItemName>>_Inputs) <<ItemName>>::Inputs;
+%rename (<<ItemName>>_Outputs) <<ItemName>>::Outputs;
+
+//         Signal name          Type                Default
+START_PARAMS <<ItemParamsContent>>};
+
+START_INPUTS <<ItemInputsContent>>};
+
+START_OUTPUTS <<ItemOutputsContent>>};
+
+%{
+#include "<<IncludeDir>>"
+%}
+%include "<<IncludeDir>>"
+%{
+typedef <<ItemName>>::Params Params;
+typedef <<ItemName>>::Inputs Inputs;
+typedef <<ItemName>>::Outputs Outputs;
+%}

@@ -1,0 +1,17 @@
+build/
+build_release/
+release/
+.vscode/
+*.o
+*.h5
+*.hdf5
+*.csv
+*.kml
+src/*.adoc
+test/*.adoc
+scripts/*.adoc
+*.png
+*.enc
+*/__pycache__
+__pycache__/
+results/

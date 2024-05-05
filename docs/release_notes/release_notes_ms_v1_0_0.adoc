@@ -1,0 +1,24 @@
+= Release Notes ModelSpace Version 1.0.0
+
+== Updates
+
+This is the initial public release of ModelSpace. It contains ModelSpace, including 
+the full simulation framework, tests, underlying math functions, and more. For this
+release specific features added are not available. It's the whole sim.
+
+== Limitations
+
+=== Visuals
+
+* 3D visuals are not supported for SWIG-wrapped languages
+
+=== Frames and Dynamics
+
+* Frames and dynamics only support single, fixed-mass bodies 
+* The only dynamic joints supported are fully free and fully fixed (partial DOF)
+* Acceleration-based methods are not available for nodes and frames -- they apply
+  forces and translate them through the frame tree
+
+=== SWIG Wrapping and Python
+
+* Python is the only SWIG-wrapped language supported

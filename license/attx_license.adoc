@@ -1,0 +1,44 @@
+= ATTX Software License
+
+== OVERVIEW
+
+This copy of the relevant provisions of the standard ATTX software license is 
+made available for ATTX customers solely for their convenience. It contains 
+only the relevant provisions governing software use, and not those pertaining
+to payment or other relevant factors.
+
+It is not a substitute for the actual licensing agreement signed between you,
+the customer, and ATTX LLC. The actual use of this software is governed by the
+official agreement, which contains language beyond that here. Any errors or
+omissions in this copy are not an excuse for noncompliance with the license.
+
+== LICENSE
+
+=== License
+Subject to the terms and conditions of this Agreement and the payment of the Fees, ATTX hereby grants to Customer a revocable, non-exclusive, non-transferable, non-sublicensable, and limited license to use the Software and Documentation as provided in accordance with this Agreement. Customer may make one (1) copy of the Software in identical form solely for backup purposes, subject to the terms and conditions of this Agreement. All access to the Software and Services shall be limited to Authorized Users. Customer agrees to access and use the Software and Services only as authorized in this Agreement and for internal business purposes. 
+
+=== Use of Software
+All access to the Software and Services shall be limited to Authorized Users. Customer and its Authorized Users agree to access and use the Software and Services: (a) only as authorized in this Agreement and the applicable written Statement of Work; and (b) only for internal business purposes. Customer and its Authorized Users agree to not (i) use the Software for the benefit of any third parties, (ii) directly or indirectly sublicense, assign, transfer, sell, rent, lend, lease, or otherwise provide the Software or any portion thereof to any third party, including any outsourcer, vendor, consultant, or partner, (iii) translate, modify, reverse engineer, disassemble, decompile, or make any attempt to ascertain, derive, or obtain the source code for the Software or create derivative works of the Software, or (iv) remove, modify, or obscure any copyright, trademark, or other proprietary rights notices that are contained in or on the Software. Customer shall inform each Authorized User of its obligations under this Agreement and Customer shall ensure that each Authorized User complies with the terms of this Agreement at all times. Customer shall immediately notify ATTX if Customer becomes aware of any violation of the terms of this Agreement. Customer is solely responsible for any use of the Software by Authorized Users and shall be liable for any breach of this Agreement by any Authorized User.  
+
+=== Modification of Software
+ATTX reserves the right to make changes to the Software, including but not limited to, changes that (a) are necessary or appropriate to the continued orderly function of the Software, including, without limitation, implementing bug-fixes, patches, or Software updates, (b) are reasonably required in order to comply with applicable law or regulation, (c) extend or enhance the functionalities or architecture of the Software, or (d) are necessary to correct any actual infringement upon a patent or copyright of the United States. ATTX agrees to notify Customer of such planned modification in advance. ATTX shall own all right, title, and interest in and to all intellectual property, including any patent, copyright, trademark, trade secret, and similar rights, to any upgrades, modifications, and improvements to the Software.
+
+=== Extensions
+Customer may extend the Software to create software models, tasks, functions, and utilities (“Extensions”). Customer shall only extend the Software solely for its internal business purposes. Customer shall own all right, title, and interest in and to all intellectually property solely in the Extensions. Customer shall have no ownership rights to the Software and shall only have the right to use the Software pursuant to the license provided in this Agreement.  
+
+== OWNERSHIP AND INTELLECTUAL PROPERTY
+
+=== Ownership of Software, Services, ATTX Content, and Documentation
+Except as expressly provided herein, ATTX shall own all right, title, and interest in and to all Intellectual Property in the Software, Services, ATTX Content, and Documentation.
+
+== TERM 
+
+=== Consequences of Termination
+In the event of any termination of this Agreement, Customer shall cease all use of the Software and shall destroy the Software, including all subsequent copies of the Software regardless of the form or media in or on which the original or copies may exist. Customer shall certify in writing to ATTX that all copies of the Software have been destroyed within thirty (30) days of termination of the Agreement. 
+
+== REPRESENTATIONS AND WARRANTIES
+
+=== Disclaimer
+THE ABOVE WARRANTIES ARE EXCLUSIVE AND IN LIEU OF ALL OTHER WARRANTIES EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED WARRANTIES OF DESIGN, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE OR ARISING FROM A COURSE OF DEALING, USAGE, OR TRADE PRACTICE. EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, ALL SOFTWARE AND SERVICES ARE PROVIDED “AS IS” AND ATTX DOES NOT MAKE ANY REPRESENTATION, WARRANTY, OR GUARANTY AS TO THE RELIABILITY, TIMELINESS, QUALITY, SUITABILITY, AVAILABILITY, ACCURACY, OR COMPLETENESS OF THE SOFTWARE OR SERVICES, INCLUDING, WITHOUT LIMITATION, THAT THE USE OF THE SOFTWARE AND SERVICES WILL BE SECURE, TIMELY, UNINTERRUPTED, OR ERROR-FREE; OR OPERATE IN COMBINATION WITH ANY OTHER HARDWARE, SOFTWARE, SYSTEM, OR DATA; OR THE SOFTWARE AND SERVICES WILL MEET CUSTOMER’S REQUIREMENTS OR EXPECTATIONS. EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, ATTX MAKES NO REPRESENTATION OR WARRANTY REGARDING THE SECURE OPERATION OF THE SOFTWARE AND SERVICES.
+
+ATTX MAKES NO REPRESENTATION OR WARRANTY AND SHALL HAVE NO RESPONSIBILITY FOR ANY EXTENSIONS OR ADDITIONAL CODE DEVELOPED OR IMPLEMENTED BY CUSTOMER USING THE SOFTWARE. ANY EXTENSIONS MADE BY CUSTOMER, INCLUDING BUT NOT LIMITED TO ALTERATIONS, ENHANCEMENTS, OR CUSTOMIZATIONS, ARE UNDERTAKEN SOLELY FOR CUSTOMER’S INTERNAL USE. ATTX SHALL NOT BE RESPONSIBLE FOR THE FUNCTIONALITY, PERFORMANCE, OR CONSEQUENCES OF SUCH EXTENSIONS. 
