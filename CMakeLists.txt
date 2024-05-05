@@ -17,14 +17,7 @@
 ##############################################################################
 # Set our project name. This flag should be set to the same name as the project
 # name in git
-set(PROJECT_NAME ms_nesc_validation)
-
-###############################################################################
-# Extract data
-##############################################################################
-# For this project we have a large amount of data we need to extract. Do that
-# here by running the "unzip" command
-execute_process(COMMAND unzip "../data_zipped.zip" "-d" "..")
+set(PROJECT_NAME modelspace-release)
 
 ###############################################################################
 # Set our build flags
@@ -40,10 +33,6 @@ endif()
 # Project configuration variables. These variables set the project number
 # and analysis script targets for build
 ##########################################################################
-# This call to the clockwerk submodule cmake to build out our core utils
-add_subdirectory(modelspace)
-include_directories(modelspace/cpp/src)
-include_directories(modelspace/clockwerk/src)
 
 # ATTX ModelSpace version 0.1
 cmake_minimum_required(VERSION 3.8)
@@ -70,10 +59,23 @@ execute_process(COMMAND touch ${PROJECT_BINARY_DIR}/__init__.py)
 ##############################################################################
 # Set up dependencies
 ##############################################################################
+include_directories(${PROJECT_SOURCE_DIR}/modelspace/cpp/src)
+include_directories(${PROJECT_SOURCE_DIR}/modelspace/clockwerk/src)
+
 # We have a dependency on Python (and other languages) for CMake. Find python
 # here and ensure it is included
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
 include_directories(${Python3_INCLUDE_DIRS})
+
+if(NOT DEFINED HIGHFIVE_USE_BOOST)
+  set(HIGHFIVE_USE_BOOST Off)
+endif()
+
+# Include the subdirectory and use the target HighFive.
+add_subdirectory(${PROJECT_SOURCE_DIR}/highfive)
+
+# Set up for our visuals dependency
+find_package(OGRE REQUIRED COMPONENTS Bites CONFIG)
 
 ##############################################################################
 # Library Source Code
@@ -85,9 +87,10 @@ include_directories(${SRC_DIR})
 # Mark the source directory for our models, tasks, monitors, events, systems
 # This block builds a library from our source to be linked into test and 
 # analysis scripts
+link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib)
 file(GLOB_RECURSE CXX_SRC ${SRC_DIR}/*.cpp)
 add_library(${PROJECT_NAME} ${CXX_SRC})
-target_link_libraries(${PROJECT_NAME} modelspace clockwerk msis gfortran)
+target_link_libraries(${PROJECT_NAME} modelspace clockwerk HighFive OgreBites)
 
 ##############################################################################
 # Script Source Code
@@ -105,7 +108,7 @@ foreach(var ${CXX_SCRIPT})
     string(REPLACE "cpp/scripts/" "" exe_name ${path_f})
     string(REPLACE "/" "_" exe_name ${exe_name})
     add_executable(${exe_name}script.o ${var})
-    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} clockwerk modelspace msis gfortran)
+    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} clockwerk modelspace HighFive OgreBites)
     set_target_properties(${exe_name}script.o PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${path_f}")
 endforeach()
 
@@ -115,7 +118,9 @@ endforeach()
 # Set our test directory
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/cpp/test)
-file(GLOB_RECURSE CXX_TEST ${TEST_DIR}/*.cpp)
+set(MS_TEST_DIR ${PROJECT_SOURCE_DIR}/modelspace/cpp/test)
+set(CWK_TEST_DIR ${PROJECT_SOURCE_DIR}/modelspace/clockwerk/test)
+file(GLOB_RECURSE CXX_TEST ${TEST_DIR}/*.cpp ${MS_TEST_DIR}/*.cpp ${CWK_TEST_DIR}/*.cpp)
 
 # Fetch our googletest support code
 include(FetchContent)
@@ -239,8 +244,7 @@ add_custom_target(adoc
 # This command generates all docs -- asciidoc and doxygen
 
 # Call our doxygen and asciidoc together
-add_custom_target(doc_all
-    COMMAND make doc_adoc               # Build our ModelSpace docs
+add_custom_target(docs
     COMMAND make dox        # This makes our modelspace doxygen
     COMMAND make adoc       # This builds all of our ascii docs
     VERBATIM

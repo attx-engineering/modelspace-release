@@ -1,0 +1,6 @@
+[submodule "doxygen-awesome-css"]
+	path = doxygen-awesome-css
+	url = https://github.com/attx-engineering/doxygen-awesome-css.git
+[submodule "highfive"]
+	path = highfive
+	url = https://github.com/attx-engineering/highfive.git
