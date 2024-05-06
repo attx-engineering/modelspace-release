@@ -20,6 +20,19 @@
 set(PROJECT_NAME modelspace-release)
 
 ###############################################################################
+# Detect/identify our architecture -- this will be used to select our binaries
+##############################################################################
+execute_process(COMMAND uname "-m" RESULT_VARIABLE rv OUTPUT_VARIABLE out OUTPUT_STRIP_TRAILING_WHITESPACE)
+set(SYSTEM_ARCHITECTURE "${out}")
+
+if(SYSTEM_ARCHITECTURE STREQUAL "x86_64")
+else()
+    message("ERROR: System architecture ${SYSTEM_ARCHITECTURE} not supported by ModelSpace")
+    message("Contact help@attx.tech and we will add your architecture to support")
+    message(FATAL_ERROR "Exiting.")
+endif()
+
+###############################################################################
 # Set our build flags
 ##############################################################################
 # Set a flag for our swig language, if we want one. Default is Python
@@ -87,7 +100,8 @@ include_directories(${SRC_DIR})
 # Mark the source directory for our models, tasks, monitors, events, systems
 # This block builds a library from our source to be linked into test and 
 # analysis scripts
-link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib)
+# Note we're pulling linked libraries from our system architecture
+link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/${SYSTEM_ARCHITECTURE}/)
 file(GLOB_RECURSE CXX_SRC ${SRC_DIR}/*.cpp)
 add_library(${PROJECT_NAME} ${CXX_SRC})
 target_link_libraries(${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran )
