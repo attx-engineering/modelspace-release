@@ -26,6 +26,3 @@ sudo apt-get install -y asciidoc
 
 # Now install all of the python packages necessary to support ModelSpace
 sudo apt-get install -y python3-matplotlib python3-plotly python3-numpy python3-pandas
-
-# Finally source our bashrc
-source ../.bashrc

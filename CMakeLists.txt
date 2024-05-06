@@ -180,7 +180,7 @@ foreach(tgt ${ITEM_HEADERS})
     message("Generating SWIG wrapper for file ${tgt}")
     execute_process(COMMAND python3 AutogenSwigFiles.py 
                             "--include_path=${tgt}" 
-                            "--incl_swig_dir=${PROJECT_SOURCE_DIR}/swig"
+                            "--incl_swig_dir=${PROJECT_SOURCE_DIR}/modelspace/swig"
                             "--out_dir=${PROJECT_BINARY_DIR}/swig_auto"
                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/swig 
                     RESULT_VARIABLE rv
