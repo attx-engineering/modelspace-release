@@ -54,7 +54,7 @@ GENERATE_TREEVIEW      = YES
 DISABLE_INDEX = NO
 FULL_SIDEBAR = NO
 HTML_COLORSTYLE        = LIGHT # required with Doxygen >= 1.9.5
-HTML_EXTRA_STYLESHEET  = @PROJECT_SOURCE_DIR@/clockwerk/doxygen-awesome-css/doxygen-awesome.css \
+HTML_EXTRA_STYLESHEET  = @PROJECT_SOURCE_DIR@/doxygen-awesome-css/doxygen-awesome.css \
                          @PROJECT_SOURCE_DIR@/docs/docs_doxygen/attx.css 
 
 #---------------------------------------------------------------------------
