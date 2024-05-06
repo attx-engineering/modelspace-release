@@ -27,7 +27,7 @@ set(SYSTEM_ARCHITECTURE "${out}")
 
 if(SYSTEM_ARCHITECTURE STREQUAL "x86_64")
     set(ARCHITECTURE "x86_64")
-elseif(SYSTEM_ARCHITECTURE STREQUAL "aarm64")
+elseif(SYSTEM_ARCHITECTURE STREQUAL "aarch64")
     set(ARCHITECTURE "arm64")
 else()
     message("ERROR: System architecture ${SYSTEM_ARCHITECTURE} not supported by ModelSpace")
