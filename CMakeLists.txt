@@ -26,6 +26,9 @@ execute_process(COMMAND uname "-m" RESULT_VARIABLE rv OUTPUT_VARIABLE out OUTPUT
 set(SYSTEM_ARCHITECTURE "${out}")
 
 if(SYSTEM_ARCHITECTURE STREQUAL "x86_64")
+    set(ARCHITECTURE "x86_64")
+elseif(SYSTEM_ARCHITECTURE STREQUAL "aarm64")
+    set(ARCHITECTURE "arm64")
 else()
     message("ERROR: System architecture ${SYSTEM_ARCHITECTURE} not supported by ModelSpace")
     message("Contact help@attx.tech and we will add your architecture to support")
@@ -101,7 +104,7 @@ include_directories(${SRC_DIR})
 # This block builds a library from our source to be linked into test and 
 # analysis scripts
 # Note we're pulling linked libraries from our system architecture
-link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/${SYSTEM_ARCHITECTURE}/)
+link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/${ARCHITECTURE}/)
 file(GLOB_RECURSE CXX_SRC ${SRC_DIR}/*.cpp)
 add_library(${PROJECT_NAME} ${CXX_SRC})
 target_link_libraries(${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran )
