@@ -1,6 +1,7 @@
 #/bin/bash
 
 # Ensure our distro is updated to the latest
+sudo apt update
 sudo apt-get update
 
 # Make sure configuration management tools are available
