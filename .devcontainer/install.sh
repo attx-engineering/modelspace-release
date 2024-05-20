@@ -18,4 +18,4 @@ sudo apt-get install -y gcovr lcov;
 sudo apt-get install -y asciidoctor;
 sudo apt-get install -y asciidoc;
 # Now install all of the python packages necessary to support ModelSpace
-pip3 install -r requirements.txt
+pip3 install -r .devcontainer/requirements.txt
