@@ -18,4 +18,6 @@ sudo apt-get install -y gcovr lcov;
 sudo apt-get install -y asciidoctor;
 sudo apt-get install -y asciidoc;
 # Now install all of the python packages necessary to support ModelSpace
-pip3 install -r .devcontainer/requirements.txt
+sudo apt-get install -y python3-matplotlib python3-plotly python3-numpy python3-pandas;
+# And copy our license file to /usr/local, if it exists in license
+sudo cp license/licensefile.enc /usr/local
