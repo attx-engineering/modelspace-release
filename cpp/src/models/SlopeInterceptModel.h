@@ -22,8 +22,7 @@ Author: Alex Reynolds
 #ifndef MODELS_SLOPE_INTERCEPT_MODEL_H
 #define MODELS_SLOPE_INTERCEPT_MODEL_H
 
-#include "core/macros.h"
-#include "architecture/Tasks.h"
+#include "ModelSpace.h"
 
 /**
  * @brief   Slope-intercept "model"
@@ -62,9 +61,9 @@ public:
 
     // Model-specific implementations of startup and derivative
     SlopeInterceptModel() : Model() {}
-    SlopeInterceptModel(Task &pnt, int schedule_slot=0, const std::string &m_name="slope_intercept") 
+    SlopeInterceptModel(Model &pnt, int schedule_slot=0, const std::string &m_name="slope_intercept") 
         : Model(pnt, schedule_slot, m_name) {}
-    SlopeInterceptModel(Executive &e, int schedule_slot=0, const std::string &m_name="slope_intercept") 
+    SlopeInterceptModel(SimulationExecutive &e, int schedule_slot=0, const std::string &m_name="slope_intercept") 
         : Model(e, schedule_slot, m_name) {}
     ~SlopeInterceptModel() {}
     int execute(); 

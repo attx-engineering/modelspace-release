@@ -110,7 +110,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
+os=$(uname -s)
+architecture=$(uname -m)
+
 export PYTHONPATH="${PYTHONPATH}:$PWD/python/"
 export PYTHONPATH="${PYTHONPATH}:$PWD/build/"
-export PYTHONPATH="${PYTHONPATH}:$PWD/build/modelspace/"
+export PYTHONPATH="${PYTHONPATH}:$PWD/modelspace/lib/${os}/${architecture}/Python"
 export PYTHONPATH="${PYTHONPATH}:$PWD/modelspace/python/"

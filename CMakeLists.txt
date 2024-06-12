@@ -45,6 +45,11 @@ if(NOT SWIG_LANGUAGE)
     set(SWIG_LANGUAGE python)
 endif()
 
+# Set a flag for whether to enable and run the modelspace unit tests provided
+# by the modelspace development team. The default is to not do so.
+# Right now the supported list is: Python (default), NONE
+option(ENABLE_MS_TESTS "Flag to indicate whether ModelSpace unit tests should be run (default is false)")
+
 ##########################################################################
 # Project configuration variables. These variables set the project number
 # and analysis script targets for build
@@ -77,6 +82,7 @@ execute_process(COMMAND touch ${PROJECT_BINARY_DIR}/__init__.py)
 ##############################################################################
 include_directories(${PROJECT_SOURCE_DIR}/modelspace/cpp/src)
 include_directories(${PROJECT_SOURCE_DIR}/modelspace/clockwerk/src)
+include_directories(${PROJECT_SOURCE_DIR}/modelspace/cspice/include)
 
 # We have a dependency on Python (and other languages) for CMake. Find python
 # here and ensure it is included
@@ -104,10 +110,10 @@ include_directories(${SRC_DIR})
 # This block builds a library from our source to be linked into test and 
 # analysis scripts
 # Note we're pulling linked libraries from our system architecture
-link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/${ARCHITECTURE}/)
+link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/${CMAKE_SYSTEM_NAME}/${ARCHITECTURE}/)
 file(GLOB_RECURSE CXX_SRC ${SRC_DIR}/*.cpp)
 add_library(${PROJECT_NAME} ${CXX_SRC})
-target_link_libraries(${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran )
+target_link_libraries(${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice)
 
 ##############################################################################
 # Script Source Code
@@ -125,7 +131,7 @@ foreach(var ${CXX_SCRIPT})
     string(REPLACE "cpp/scripts/" "" exe_name ${path_f})
     string(REPLACE "/" "_" exe_name ${exe_name})
     add_executable(${exe_name}script.o ${var})
-    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran)
+    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice)
     set_target_properties(${exe_name}script.o PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${path_f}")
 endforeach()
 
@@ -137,7 +143,11 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/cpp/test)
 set(MS_TEST_DIR ${PROJECT_SOURCE_DIR}/modelspace/cpp/test)
 set(CWK_TEST_DIR ${PROJECT_SOURCE_DIR}/modelspace/clockwerk/test)
-file(GLOB_RECURSE CXX_TEST ${TEST_DIR}/*.cpp ${MS_TEST_DIR}/*.cpp ${CWK_TEST_DIR}/*.cpp)
+if(ENABLE_MS_TESTS)
+    file(GLOB_RECURSE CXX_TEST ${TEST_DIR}/*.cpp ${MS_TEST_DIR}/*.cpp ${CWK_TEST_DIR}/*.cpp)
+else()
+    file(GLOB_RECURSE CXX_TEST ${TEST_DIR}/*.cpp)
+endif()
 
 # Fetch our googletest support code
 include(FetchContent)
@@ -157,7 +167,7 @@ enable_testing()
 # build all cpp tests
 add_executable(${PROJECT_NAME}_test ${CXX_TEST})
 set_target_properties(${PROJECT_NAME}_test PROPERTIES COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
-target_link_libraries(${PROJECT_NAME}_test gtest_main modelspace HighFive OgreBites clockwerk msis gfortran gcov)
+target_link_libraries(${PROJECT_NAME}_test gtest_main modelspace HighFive OgreBites clockwerk msis gfortran gcov cspice)
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME}_test)
@@ -189,27 +199,6 @@ foreach(tgt ${ITEM_HEADERS})
     # message("rv='${rv}'")
 endforeach()
 
-file(GLOB_RECURSE ITEM_HEADERS ${PROJECT_SOURCE_DIR}/modelspace/cpp/src/models/*.h ${PROJECT_SOURCE_DIR}/modelspace/cpp/src/tasks/*.h)
-
-# Loop through our headers -- note the python script identifies what swig wrappers
-# are needed and which are not
-# A swig wrapper is defined as "not needed" if a file with an identical name exists
-# in the swig/ directory
-foreach(tgt ${ITEM_HEADERS})
-    message("Generating SWIG wrapper for file ${tgt}")
-    execute_process(COMMAND python3 AutogenSwigFiles.py 
-                            "--include_path=${tgt}" 
-                            "--incl_swig_dir=${PROJECT_SOURCE_DIR}/modelspace/swig"
-                            "--out_dir=${PROJECT_BINARY_DIR}/swig_auto"
-                    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/swig 
-                    RESULT_VARIABLE rv
-                    OUTPUT_VARIABLE out)
-    # message("${OUTPUT_VARIABLE}")
-    # message("rv='${rv}'")
-endforeach()
-
-
-
 find_package (SWIG)
 include (UseSWIG)
 
@@ -231,18 +220,6 @@ file(GLOB_RECURSE MAN_SWIG ${MAN_SWIG_DIR}/*.i)
 foreach(tgt ${MAN_SWIG})
     set_property(SOURCE ${tgt} PROPERTY CPLUSPLUS ON)
     string(REPLACE ${MAN_SWIG_DIR}/ "" tgt_name ${tgt})
-    string(REPLACE ".i" "" tgt_name ${tgt_name})
-    message("Configuring CMake for SWIG target module ${tgt_name}")
-    swig_add_library(${tgt_name} LANGUAGE ${SWIG_LANGUAGE} SOURCES ${tgt})
-    target_link_libraries(${tgt_name} modelspace clockwerk ${PROJECT_NAME})
-endforeach()
-
-set(MS_SWIG_DIR ${PROJECT_SOURCE_DIR}/modelspace/swig)
-file(GLOB_RECURSE MS_SWIG ${MS_SWIG_DIR}/*.i)
-
-foreach(tgt ${MS_SWIG})
-    set_property(SOURCE ${tgt} PROPERTY CPLUSPLUS ON)
-    string(REPLACE ${MS_SWIG_DIR}/ "" tgt_name ${tgt})
     string(REPLACE ".i" "" tgt_name ${tgt_name})
     message("Configuring CMake for SWIG target module ${tgt_name}")
     swig_add_library(${tgt_name} LANGUAGE ${SWIG_LANGUAGE} SOURCES ${tgt})
