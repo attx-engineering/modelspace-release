@@ -1,7 +1,6 @@
 build/
 build_release/
 release/
-.vscode/
 *.o
 *.h5
 *.hdf5

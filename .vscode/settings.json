@@ -1,0 +1,9 @@
+{
+    "terminal.integrated.env.linux": {"PYTHONPATH":"${workspaceFolder}/modelspace/lib/Python:${workspaceFolder}/modelspace/python:${workspaceFolder}/build:${workspaceFolder}/python"},
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/modelspace/lib//Python",
+        "${workspaceFolder}/modelspace/python",
+        "${workspaceFolder}/build",
+        "${workspaceFolder}/python"
+    ]
+}
