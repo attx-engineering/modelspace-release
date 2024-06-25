@@ -111,7 +111,7 @@ else()
     file(GLOB_RECURSE LOC_SRC ${PROJECT_SOURCE_DIR}/cpp/locations/*.cpp)
     add_library(locations SHARED ${LOC_SRC})
     include(GNUInstallDirs)
-    install(TARGETS locations LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    install(TARGETS locations LIBRARY DESTINATION "/usr/lib")
 endif()
 
 ##############################################################################
