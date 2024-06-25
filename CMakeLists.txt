@@ -83,6 +83,7 @@ execute_process(COMMAND touch ${PROJECT_BINARY_DIR}/__init__.py)
 include_directories(${PROJECT_SOURCE_DIR}/modelspace/cpp/src)
 include_directories(${PROJECT_SOURCE_DIR}/modelspace/clockwerk/src)
 include_directories(${PROJECT_SOURCE_DIR}/modelspace/cspice/include)
+include_directories(${PROJECT_SOURCE_DIR})
 
 # We have a dependency on Python (and other languages) for CMake. Find python
 # here and ensure it is included
@@ -100,6 +101,18 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/highfive)
 find_package(OGRE REQUIRED COMPONENTS Bites CONFIG)
 
 ##############################################################################
+# Locations Source Code (compiles only when this CMakeLists is our project main)
+##############################################################################
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(hasParent)
+  message(STATUS "ModelSpace CMakeLists.txt has parent CMakeLists -- doing nothing for locations.")
+else()
+    include_directories(${PROJECT_SOURCE_DIR}/cpp/locations)
+    file(GLOB_RECURSE LOC_SRC ${PROJECT_SOURCE_DIR}/cpp/locations/*.cpp)
+    add_library(locations ${LOC_SRC})
+endif()
+
+##############################################################################
 # Library Source Code
 ##############################################################################
 # Source code for our FORTRAN libraries for MSIS
@@ -110,10 +123,10 @@ include_directories(${SRC_DIR})
 # This block builds a library from our source to be linked into test and 
 # analysis scripts
 # Note we're pulling linked libraries from our system architecture
-link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/${CMAKE_SYSTEM_NAME}/${ARCHITECTURE}/)
+link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/)
 file(GLOB_RECURSE CXX_SRC ${SRC_DIR}/*.cpp)
 add_library(${PROJECT_NAME} ${CXX_SRC})
-target_link_libraries(${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice)
+target_link_libraries(${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice locations)
 
 ##############################################################################
 # Script Source Code
@@ -131,7 +144,7 @@ foreach(var ${CXX_SCRIPT})
     string(REPLACE "cpp/scripts/" "" exe_name ${path_f})
     string(REPLACE "/" "_" exe_name ${exe_name})
     add_executable(${exe_name}script.o ${var})
-    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice)
+    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice locations)
     set_target_properties(${exe_name}script.o PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${path_f}")
 endforeach()
 
@@ -167,7 +180,7 @@ enable_testing()
 # build all cpp tests
 add_executable(${PROJECT_NAME}_test ${CXX_TEST})
 set_target_properties(${PROJECT_NAME}_test PROPERTIES COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
-target_link_libraries(${PROJECT_NAME}_test gtest_main modelspace HighFive OgreBites clockwerk msis gfortran gcov cspice)
+target_link_libraries(${PROJECT_NAME}_test gtest_main modelspace HighFive OgreBites clockwerk msis gfortran gcov cspice locations)
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME}_test)

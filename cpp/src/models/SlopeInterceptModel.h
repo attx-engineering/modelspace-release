@@ -29,7 +29,7 @@ Author: Alex Reynolds
  * 
  * This model demonstrates a simple "slope-intercept" in ModelSpace format
 */
-class SlopeInterceptModel : public Model {
+class SlopeInterceptModel : public modelspace::Model {
 public:
     // TODO: Replace need for mass with direct acceleration calculation when 
     // body accel methods are implemented
@@ -56,14 +56,11 @@ public:
         SIGNAL(y,                       double,                 0.0)
     END_OUTPUTS
 
-    // Model dependencies
-    struct Dependency { } dependency;
-
     // Model-specific implementations of startup and derivative
-    SlopeInterceptModel() : Model() {}
-    SlopeInterceptModel(Model &pnt, int schedule_slot=0, const std::string &m_name="slope_intercept") 
+    SlopeInterceptModel() : modelspace::Model() {}
+    SlopeInterceptModel(modelspace::Model &pnt, int schedule_slot=0, const std::string &m_name="slope_intercept") 
         : Model(pnt, schedule_slot, m_name) {}
-    SlopeInterceptModel(SimulationExecutive &e, int schedule_slot=0, const std::string &m_name="slope_intercept") 
+    SlopeInterceptModel(modelspace::SimulationExecutive &e, int schedule_slot=0, const std::string &m_name="slope_intercept") 
         : Model(e, schedule_slot, m_name) {}
     ~SlopeInterceptModel() {}
     int execute(); 
