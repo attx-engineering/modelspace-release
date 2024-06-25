@@ -115,5 +115,6 @@ architecture=$(uname -m)
 
 export PYTHONPATH="${PYTHONPATH}:$PWD/python/"
 export PYTHONPATH="${PYTHONPATH}:$PWD/build/"
-export PYTHONPATH="${PYTHONPATH}:$PWD/modelspace/lib/${os}/${architecture}/Python"
+export PYTHONPATH="${PYTHONPATH}:$PWD/modelspace/lib/Python"
 export PYTHONPATH="${PYTHONPATH}:$PWD/modelspace/python/"
+export LD_LIBRARY_PATH="$PWD/build"

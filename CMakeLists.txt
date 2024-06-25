@@ -109,7 +109,9 @@ if(hasParent)
 else()
     include_directories(${PROJECT_SOURCE_DIR}/cpp/locations)
     file(GLOB_RECURSE LOC_SRC ${PROJECT_SOURCE_DIR}/cpp/locations/*.cpp)
-    add_library(locations ${LOC_SRC})
+    add_library(locations SHARED ${LOC_SRC})
+    include(GNUInstallDirs)
+    install(TARGETS locations LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 endif()
 
 ##############################################################################
@@ -126,7 +128,7 @@ include_directories(${SRC_DIR})
 link_directories(${PROJECT_SOURCE_DIR}/modelspace/lib/)
 file(GLOB_RECURSE CXX_SRC ${SRC_DIR}/*.cpp)
 add_library(${PROJECT_NAME} ${CXX_SRC})
-target_link_libraries(${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice locations)
+target_link_libraries(${PROJECT_NAME} locations modelspace HighFive OgreBites clockwerk msis gfortran cspice)
 
 ##############################################################################
 # Script Source Code
@@ -144,7 +146,7 @@ foreach(var ${CXX_SCRIPT})
     string(REPLACE "cpp/scripts/" "" exe_name ${path_f})
     string(REPLACE "/" "_" exe_name ${exe_name})
     add_executable(${exe_name}script.o ${var})
-    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} modelspace HighFive OgreBites clockwerk msis gfortran cspice locations)
+    target_link_libraries(${exe_name}script.o ${PROJECT_NAME} locations modelspace HighFive OgreBites clockwerk msis gfortran cspice)
     set_target_properties(${exe_name}script.o PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${path_f}")
 endforeach()
 
@@ -180,7 +182,7 @@ enable_testing()
 # build all cpp tests
 add_executable(${PROJECT_NAME}_test ${CXX_TEST})
 set_target_properties(${PROJECT_NAME}_test PROPERTIES COMPILE_FLAGS "-fprofile-arcs -ftest-coverage")
-target_link_libraries(${PROJECT_NAME}_test gtest_main modelspace HighFive OgreBites clockwerk msis gfortran gcov cspice locations)
+target_link_libraries(${PROJECT_NAME}_test gtest_main locations modelspace HighFive OgreBites clockwerk msis gfortran gcov cspice)
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME}_test)
