@@ -25,11 +25,7 @@
 #pragma SWIG nowarn=302,509,362
 // Include other pre-defined modules
 %include <std_string.i>
-%include "<<ClockwerkSwigPath>>/data_management.i"
-%include "<<ClockwerkSwigPath>>/architecture.i"
-%include "<<ClockwerkSwigPath>>/core.i"
-%include "<<ClockwerkSwigPath>>/simlogging.i"
-%include "<<ClockwerkSwigPath>>/simulation.i"
+%include "<<ClockwerkSwigPath>>/ModelSpacePy.i"
 %{
 #include "core/macros.h"
 %}
